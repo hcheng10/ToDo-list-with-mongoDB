@@ -1,0 +1,28 @@
+<%- include("header") -%>
+
+<div class="box" id="heading">
+  <!-- for javascript control flow we could use <%%> -->
+  <h1><%= listTitle %></h1>
+</div>
+
+<div class="box">
+  <!-- display todolist and remove todoitems if checked -->
+  <% newListItems.forEach(function(item) { %>
+    <form action="/delete" method="post">
+      <div class="item">
+        <!-- onChange="this.form.submit()" : submit form when checkbox is checked -->
+        <input type="checkbox" name="checkbox" value="<%= item._id %>" onChange="this.form.submit()">
+        <p><%= item.name %></p>
+        <input type="hidden" name="listName" value="<%= listTitle %>"></input> <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden -->
+      </div>
+    </form>
+  <% }); %>
+
+  <!-- add new toDo items -->
+  <form class="item" action="/" method="post">
+    <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required> <!-- autocomplete="off" to cancel auto fill in broser -->
+    <button type="submit" name="list" value="<%= listTitle %>">+</button>
+  </form>
+</div>
+
+<%- include("footer") -%>
